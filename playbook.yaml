@@ -1,0 +1,61 @@
+---
+- hosts: ucs
+  name: Configure UCS BMC Settings
+  gather_facts: False
+
+  tasks:
+    # - name: Display all variables/facts known for a host
+    #   ansible.builtin.debug:
+    #     var: hostvars[inventory_hostname]
+    
+    # - name: Configure NTP settings on the Manager
+    #   community.general.redfish_config:
+    #     category: Manager
+    #     command: SetNetworkProtocols
+    #     network_protocols:
+    #       NTP:
+    #         NTPServers: "{{ ntp_servers }}"
+    #         ProtocolEnabled: true
+    #     baseuri: "{{ baseuri }}"
+    #     username: "{{ username }}"
+    #     password: "{{ password }}"
+    #     timeout: 15
+    #   register: ntp_result
+    
+    # - name: Display NTP configuration result
+    #   debug:
+    #     var: ntp_result
+
+    # - name: Set Host BMC NIC Settings
+    #   community.general.redfish_config:
+    #     baseuri: "{{ baseuri }}"
+    #     username: "{{ username }}"
+    #     password: "{{ password }}"
+    #     category: Manager
+    #     command: SetManagerNic
+    #     nic_config:
+    #       DHCPv4:
+    #         DHCPEnabled: false
+    #       DomainName: "{{ nic_config.domain_name }}"
+    #       HostName: "{{ nic_config.hostname }}"
+    #       IPv4StaticAddresses:
+    #         Address: "{{ nic_config.ipv4.address }}"
+    #         Gateway: "{{ nic_config.ipv4.gateway }}"
+    #         SubnetMask: "{{ nic_config.ipv4.subnet_mask }}"
+    #   register: nic_result
+
+    # - name: Display NIC configuration result
+    #   debug:
+    #     var: nic_result
+
+    - name: Set Host BMC NIC DNS Servers
+      community.general.redfish_config:
+        baseuri: "{{ baseuri }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        category: Manager
+        command: SetManagerNic
+        nic_config:
+          StaticNameServers: "{{ nic_config.dns_servers }}"
+      register: dns_result
+

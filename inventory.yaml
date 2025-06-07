@@ -1,0 +1,38 @@
+---
+ucs:
+  hosts:
+    172.28.224.32:
+      baseuri: 172.28.224.32
+      ansible_connection: local
+
+  vars:
+    # Python Version
+    ansible_python_interpreter: /usr/bin/python3
+    username: root
+    password: Free4All123
+
+    # Local directory where all results are placed
+    rootdir: ~/inventory_files
+
+    # Shorter name for inventory_hostname.
+    # Refers to the OS hostname, not the OOB controller.
+    host: "{{inventory_hostname}}"
+
+    # For Managing BMC NIC Settings
+    nic_config:
+      # DNS configuration
+      domain_name: cisco.com
+      dns_servers:
+        - 173.38.200.100
+        - 144.254.71.184
+      hostname: C885A-LLLYYWWSSSS
+      ipv4:
+        address: 172.28.224.32
+        gateway: 172.28.224.1
+        subnet_mask: 255.255.254.0
+
+    # For managing NTP settings
+    ntp_servers:
+      - 0.pool.ntp.org
+      - 1.pool.ntp.org
+      - 2.pool.ntp.org
